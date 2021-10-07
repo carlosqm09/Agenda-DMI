@@ -1,4 +1,7 @@
+import 'package:agenda_dmi/bloc/login_bloc.dart';
+import 'package:agenda_dmi/widgets/LoginButton.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -8,6 +11,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  final login = LoginBloc();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +30,27 @@ class _LoginPageState extends State<LoginPage> {
                 fontSize: 30,
                 fontWeight: FontWeight.bold
               ),),
-            )
+            ),
+            LoginButton(
+            width: "300",
+            height: "45",
+            backgroundColor: Color(0xffDC4E41),
+            onPressed: (){},
+            children: [
+              FaIcon(
+                FontAwesomeIcons.google,
+                color: Colors.white,
+              ),
+              Container(
+                  margin: EdgeInsets.only(left: double.parse("60")),
+                  child: Text(
+                    'Inicia sesión con Google',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  )),
+            ],
+          )
           ],
         ),
       ),
