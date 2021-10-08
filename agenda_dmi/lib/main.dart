@@ -1,8 +1,15 @@
+import 'package:agenda_dmi/pages/bienvenido.dart';
 import 'package:agenda_dmi/pages/login.dart';
+import 'package:agenda_dmi/tools/shared_preferences.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main(List<String> args) {
+void main(List<String> args) async {
   runApp(MyApp());
+  final prefs = PreferenciasUsuario.instance;
+
+  await Firebase.initializeApp();
+  await prefs.initPrefs();
 }
 
 class MyApp extends StatefulWidget {
@@ -20,6 +27,7 @@ class _MyAppState extends State<MyApp> {
       title: "Agenda",
       routes: {
         "/": (_) => LoginPage(),
+        "/bienvenida": (_)=>Bienvenido()
       },
     );
   }

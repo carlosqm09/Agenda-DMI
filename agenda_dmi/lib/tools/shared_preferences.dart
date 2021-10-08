@@ -8,6 +8,8 @@ class PreferenciasUsuario {
 
   static PreferenciasUsuario? _internal;
 
+  SharedPreferences? _prefs;
+
   PreferenciasUsuario._();
 
   static PreferenciasUsuario get instance {
@@ -16,5 +18,33 @@ class PreferenciasUsuario {
     }
 
     return _internal!;
+  }
+
+  Future<void> initPrefs() async{
+    this._prefs = await SharedPreferences.getInstance();
+  }
+
+  get nombre{
+    return this._prefs!.getString("nombre") ?? '';
+  }
+
+  get email{
+    return this._prefs!.getString("email") ?? '';
+  }
+
+  get foto{
+    return this._prefs!.getString("foto") ?? '';
+  }
+
+  set setNombre(String? name){
+    _prefs!.setString("nombre", name ?? "");
+  }
+
+  set setEmail(String? email){
+    _prefs!.setString("email", email ?? "");
+  }
+
+  set setFoto(String? foto){
+    _prefs!.setString("foto", foto ?? "");
   }
 }
