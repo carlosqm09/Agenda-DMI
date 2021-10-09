@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "362926071184",
+    "project_id": "agenda-dmi",
+    "storage_bucket": "agenda-dmi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:362926071184:android:dcf520c61c022e4c922715",
+        "android_client_info": {
+          "package_name": "com.example.agenda_dmi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "362926071184-qrf8urbaofgghguvlb44lkeajh56hqth.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSStSlbSEuvGOh-_pbTmJm85b2bZW02TE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "362926071184-qrf8urbaofgghguvlb44lkeajh56hqth.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
