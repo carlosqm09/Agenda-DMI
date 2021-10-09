@@ -25,10 +25,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       initialRoute: '/',
       title: "Agenda",
-      routes: {
-        "/": (_) => LoginPage(),
-        "/bienvenida": (_)=>Bienvenido()
-      },
+      routes: {"/": (_) => LoginPage(), "/bienvenida": (_) => Bienvenido()},
     );
   }
 }

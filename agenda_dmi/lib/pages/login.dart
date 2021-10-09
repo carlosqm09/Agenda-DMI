@@ -34,14 +34,15 @@ class _LoginPageState extends State<LoginPage> {
               width: "300",
               height: "45",
               backgroundColor: Color(0xffDC4E41),
-              onPressed: ()async{
+              onPressed: () async {
                 final result = await login.signInGoogle();
-                if(result){
+                if (result) {
                   Navigator.of(context).pushNamed("/bienvenida");
-                }else{
+                } else {
                   final scaffold = ScaffoldMessenger.maybeOf(context);
 
-                  scaffold!.showSnackBar(SnackBar(content: Text("Error al iniciar sesión")));
+                  scaffold!.showSnackBar(
+                      SnackBar(content: Text("Error al iniciar sesión")));
                 }
               },
               children: [

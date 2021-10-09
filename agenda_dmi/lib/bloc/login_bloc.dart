@@ -32,7 +32,7 @@ class LoginBloc {
     // return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
-  void signOut(){
+  void signOut() {
     FirebaseAuth.instance.signOut();
 
     _prefs.setEmail = "";
