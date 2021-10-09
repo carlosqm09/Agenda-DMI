@@ -1,7 +1,8 @@
+import 'package:agenda_dmi/views/home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(HomeApp());
 }
 
 class MyApp extends StatelessWidget {
