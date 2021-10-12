@@ -37,6 +37,7 @@ List<Widget> listado(List<dynamic> info) {
       ),
     ));
     lista.add(Text(elemento["temperament"]));
+    lista.add(Text('\n \n'));
   });
   return lista;
 }
