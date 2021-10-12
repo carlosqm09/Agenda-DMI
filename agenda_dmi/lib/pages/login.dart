@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
               onPressed: () async {
                 final result = await login.signInGoogle();
                 if (result) {
-                  Navigator.of(context).pushNamed("/bienvenida");
+                  Navigator.of(context).pushNamed("/home");
                 } else {
                   final scaffold = ScaffoldMessenger.maybeOf(context);
 
