@@ -16,6 +16,7 @@ Future<dynamic> _getListado() async {
 
 List<Widget> listado(List<dynamic> info) {
   List<Widget> lista = [];
+
   info.forEach((elemento) {
     lista.add(Text(
       elemento["name"],
@@ -23,7 +24,19 @@ List<Widget> listado(List<dynamic> info) {
       overflow: TextOverflow.ellipsis,
       style: const TextStyle(fontWeight: FontWeight.bold),
     ));
+
     lista.add(Text(elemento["description"]));
+    lista.add(RichText(
+      text: TextSpan(
+        text: '\n',
+        children: const <TextSpan>[
+          TextSpan(
+              text: 'Temperamento:',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+        ],
+      ),
+    ));
+    lista.add(Text(elemento["temperament"]));
   });
   return lista;
 }
