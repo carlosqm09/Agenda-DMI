@@ -122,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 MaterialPageRoute(builder: (context) => ApiTerc()),
               );
             },
-            child: Icon(Icons.people),
+            child: Icon(Icons.pets),
           ),
         ],
       ), // This trailing comma makes auto-formatting nicer for build methods.

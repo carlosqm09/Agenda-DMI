@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-String url1 = "https://emergencynumberapi.com/api/country/484";
+String url1 = "https://api.thecatapi.com/v1/breeds";
 
 Future<dynamic> _getListado() async {
   final respuesta = await http.get(Uri.parse(url1));
@@ -17,7 +17,13 @@ Future<dynamic> _getListado() async {
 List<Widget> listado(List<dynamic> info) {
   List<Widget> lista = [];
   info.forEach((elemento) {
-    lista.add(Text(elemento[""]));
+    lista.add(Text(
+      elemento["name"],
+      textAlign: TextAlign.center,
+      overflow: TextOverflow.ellipsis,
+      style: const TextStyle(fontWeight: FontWeight.bold),
+    ));
+    lista.add(Text(elemento["description"]));
   });
   return lista;
 }
