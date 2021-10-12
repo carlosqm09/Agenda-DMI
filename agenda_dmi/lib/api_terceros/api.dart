@@ -10,7 +10,7 @@ Future<dynamic> _getListado() async {
   if (respuesta.statusCode == 200) {
     return jsonDecode(respuesta.body);
   } else {
-    print("Error con la respusta");
+    print("Error con la respuesta");
   }
 }
 
@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Listado API"),
+          title: Text("Razas de Gatos"),
         ),
         body: FutureBuilder<dynamic>(
           future: _getListado(),
@@ -43,7 +43,7 @@ class HomePage extends StatelessWidget {
               return ListView(children: listado(snapshot.data));
             } else {
               print("No hay información");
-              return Text("Sin data");
+              return Text("Sin datos");
             }
           },
           initialData: Center(child: CircularProgressIndicator()),
