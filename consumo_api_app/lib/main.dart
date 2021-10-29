@@ -1,7 +1,4 @@
-import 'package:agenda_dmi/pages/bienvenido.dart';
-import 'package:agenda_dmi/pages/login.dart';
-import 'package:agenda_dmi/tools/shared_preferences.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:agenda_dmi/pages/googleMaps.dart';
 import 'package:flutter/material.dart';
 import 'package:agenda_dmi/pages/home.dart';
 
@@ -32,7 +29,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       initialRoute: '/',
       title: "Agenda",
-      routes: {"/": (_) => LoginPage(), "/home": (_) => HomePage()},
+      routes: {"/": (_) => HomePage()},
     );
   }
 }

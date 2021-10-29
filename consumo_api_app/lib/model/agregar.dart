@@ -1,42 +1,28 @@
 import 'package:agenda_dmi/pages/home.dart';
 import 'package:flutter/material.dart';
-import 'Datos_Contactos.dart';
-import 'package:http/http.dart' as http;
-import 'dart:async';
-import 'dart:convert';
-import 'package:agenda_dmi/pages/home.dart';
 import 'controllers.dart';
 import 'package:flutter/services.Dart';
 
 class Agregar extends StatefulWidget {
-  // String idcontacto;
-  // String nombrecontacto;
-  // String telefono;
-  // String apellido;
-  // String email;
-  // Contacto(this.idcontacto, this.nombrecontacto, this.telefono, this.apellido,
-  //     this.email);
   @override
-  _CreateContacts createState() => _CreateContacts();
+  _CreateStudents createState() => _CreateStudents();
 }
 
-class _CreateContacts extends State<Agregar> {
+class _CreateStudents extends State<Agregar> {
   late TextEditingController nameTextController;
-  late TextEditingController apellidoTextController;
-  late TextEditingController celularTextController;
+  late TextEditingController gradeTextController;
+  late TextEditingController groupextController;
   late TextEditingController emailTextController;
-  late TextEditingController user_idTextController;
-  late String cel;
-  late String nm;
-  late String ap;
-  late String correo;
-  late String user_id;
+  late String name;
+  late String grade;
+  late String group_;
+  late String email;
   final formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Nuevo Contacto'),
+          title: Text('Agregar estudiante'),
         ),
         body: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -47,12 +33,24 @@ class _CreateContacts extends State<Agregar> {
                     SizedBox(height: 50),
                     TextFormField(
                       inputFormatters: [
-                        LengthLimitingTextInputFormatter(10),
+                        LengthLimitingTextInputFormatter(255),
                       ],
-                      decoration: InputDecoration(labelText: "Celular"),
+                      decoration: InputDecoration(labelText: "Nombre:"),
                       initialValue: '',
                       onSaved: (value) {
-                        cel = value!;
+                        name = value!;
+                      },
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return '¡Campo Vacio!';
+                        }
+                      },
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: "Correo:"),
+                      initialValue: '',
+                      onSaved: (value) {
+                        email = value!;
                       },
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -61,34 +59,11 @@ class _CreateContacts extends State<Agregar> {
                       },
                     ),
                     TextFormField(
-                      decoration: InputDecoration(labelText: "Email"),
+                      decoration: InputDecoration(labelText: "Grado:"),
+                      keyboardType: TextInputType.number,
                       initialValue: '',
                       onSaved: (value) {
-                        correo = value!;
-                      },
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Campo Vacio';
-                        }
-                      },
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(labelText: "Nombre"),
-                      initialValue: '',
-                      onSaved: (value) {
-                        nm = value!;
-                      },
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Campo Vacio';
-                        }
-                      },
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(labelText: "Apellido"),
-                      initialValue: '',
-                      onSaved: (value) {
-                        ap = value!;
+                        grade = value!;
                       },
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -98,12 +73,12 @@ class _CreateContacts extends State<Agregar> {
                     ),
                     TextFormField(
                       inputFormatters: [
-                        LengthLimitingTextInputFormatter(10),
+                        LengthLimitingTextInputFormatter(1),
                       ],
-                      decoration: InputDecoration(labelText: "User ID"),
-                      initialValue: '1',
+                      decoration: InputDecoration(labelText: "Grupo:"),
+                      initialValue: '',
                       onSaved: (value) {
-                        user_id = value!;
+                        group_ = value!;
                       },
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -116,19 +91,18 @@ class _CreateContacts extends State<Agregar> {
                       child: Text('Agregar'),
                       onPressed: () {
                         setState(() {
-                          _addContacts(context);
+                          _addStudents(context);
                         });
-                        // Navigator.pop(context);
                       },
                     ),
                   ],
                 ))));
   }
 
-  void _addContacts(BuildContext context) {
+  void _addStudents(BuildContext context) {
     if (formkey.currentState!.validate()) {
       formkey.currentState!.save();
-      createcontact(this.nm, this.ap, this.correo, this.cel, this.user_id);
+      createStudents(this.name, this.grade, this.group_, this.email);
       // Navigator.of(context).Push(new MaterialPageRoute(builder: (context) => HomePage())).whenComplete(retrieveData);
       Navigator.of(context)
           .push(new MaterialPageRoute(builder: (context) => HomePage()));

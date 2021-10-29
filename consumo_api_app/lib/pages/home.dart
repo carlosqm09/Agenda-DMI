@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:agenda_dmi/model/Datos_Contactos.dart';
+import 'package:agenda_dmi/pages/googleMaps.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:agenda_dmi/model/editar.dart';
 import 'package:agenda_dmi/model/agregar.dart';
-
-import 'package:agenda_dmi/model/controllers.dart';
 
 // void main() {
 //   runApp(new MaterialApp(
@@ -22,26 +22,23 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   final refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   bool loading = true;
-  List<Datos_Contactos> data = <Datos_Contactos>[];
-  Future<List<Datos_Contactos>> getData() async {
-    var response = await http.get(
-        Uri.parse("https://agendaprueba.herokuapp.com/contacts"),
-        headers: {
-          "Accept": "application/json",
-        });
+  List<Datos_Students> data = <Datos_Students>[];
+  Future<List<Datos_Students>> getData() async {
+    var url = Uri.parse('https://api-students-10a.herokuapp.com/students');
+    var response = await http.get(url, headers: {
+      "Accept": "application/json",
+    });
 
     var datos = jsonDecode(response.body);
-    late var registros = <Datos_Contactos>[];
+    late var registros = <Datos_Students>[];
     for (datos in datos) {
-      registros.add(Datos_Contactos.fromJson(datos));
+      registros.add(Datos_Students.fromJson(datos));
     }
-
     return registros;
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getData().then((value) {
       setState(() {
@@ -55,7 +52,7 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: AppBar(
-          title: Text("Lista De Contactos"),
+          title: Text("Lista De Estudiantes"),
         ),
         drawer: MenuLateral(),
         body: Column(
@@ -74,21 +71,28 @@ class HomePageState extends State<HomePage> {
                         itemBuilder: (BuildContext context, int index) {
                           return InkWell(
                             onTap: () {
-                              var nombrecontacto = data[index].nombre;
-                              // var idcon = data[index].id;
-                              var telefono = data[index].telefono;
-                              var apellido = data[index].apellido;
+                              var name = data[index].name;
+                              String grade = data[index].grade.toString();
+                              var group_ = data[index].group_;
                               var email = data[index].email;
-                              String idcontacto = data[index].id.toString();
-                              String user_id = data[index].user_id.toString();
-                              // nos vamos a otra pantalla de
+                              String id = data[index].id.toString();
+                              var direccion = data[index].direccion;
+                              var lat = data[index].lat;
+                              var long_ = data[index].long_;
                               Navigator.of(context).push(
                                   MaterialPageRoute<Null>(
                                       builder: (BuildContext context) {
-                                return new Contacto(idcontacto, nombrecontacto,
-                                    telefono, apellido, email, user_id);
+                                return new Students(id, name, grade, group_,
+                                    email, direccion, lat, long_);
                               }));
-                              // print(data[index].id);
+                              // .then((value) => setState(() {
+                              //       getData().then((value) {
+                              //         setState(() {
+                              //           data.addAll(value);
+                              //           loading = false;
+                              //         });
+                              //       });
+                              //     }));
                             },
                             child: Container(
                               padding: EdgeInsets.all(15),
@@ -100,21 +104,28 @@ class HomePageState extends State<HomePage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    data[index].nombre,
-                                    style: TextStyle(fontSize: 16),
+                                    data[index].id.toString() +
+                                        ".- " +
+                                        data[index].name,
+                                    style: TextStyle(fontSize: 20),
                                   ),
                                   Text(
-                                    data[index].apellido,
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                  Text(
-                                    data[index].telefono,
+                                    "Correo: " + data[index].email,
                                     style: TextStyle(
                                         fontSize: 16, color: Colors.green),
                                   ),
                                   Text(
-                                    data[index].email,
+                                    "Grado: " + data[index].grade.toString(),
                                     style: TextStyle(fontSize: 16),
+                                  ),
+                                  Text(
+                                    "Grupo: " + data[index].group_,
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                  Text(
+                                    data[index].direccion,
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.red[800]),
                                   )
                                 ],
                               ),
@@ -134,20 +145,21 @@ class MenuLateral extends StatelessWidget {
       child: ListView(
         children: <Widget>[
           new UserAccountsDrawerHeader(
-            accountName: Text("UTM APP", style: TextStyle(color: Colors.black)),
-            accountEmail: Text("jesus26conrrado@gmail.com",
-                style: TextStyle(color: Colors.black)),
+            accountName: Text("CRUD de estudiantes API",
+                style: TextStyle(color: Colors.white, fontSize: 20)),
+            accountEmail:
+                Text("Eduardo Gamboa", style: TextStyle(color: Colors.white)),
             decoration: BoxDecoration(
                 image: DecorationImage(
                     image: NetworkImage(
-                        "https://pbs.twimg.com/profile_images/1080953228362055681/lr8IiMAP_400x400.jpg"),
+                        "https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80"),
                     fit: BoxFit.cover)),
           ),
           Ink(
             color: Colors.indigo,
             child: new ListTile(
               title: Text(
-                "Agregar",
+                "Agregar nuevos estudiantes",
                 style: TextStyle(color: Colors.white),
               ),
               onTap: () {
@@ -159,12 +171,29 @@ class MenuLateral extends StatelessWidget {
             ),
           ),
           new ListTile(
+            title: Text("Salir de la APP"),
+            onTap: () {
+              SystemNavigator.pop();
+            },
+          ),
+          new ListTile(
             title: Text("Actualizar"),
             onTap: () {
               Navigator.of(context).push(
-                  new MaterialPageRoute(builder: (context) => HomePage()));
+                  MaterialPageRoute<Null>(builder: (BuildContext context) {
+                return new HomePage();
+              }));
             },
           ),
+          // new ListTile(
+          //   title: Text("Ver Mapa We"),
+          //   onTap: () {
+          //     Navigator.of(context).push(
+          //         MaterialPageRoute<Null>(builder: (BuildContext context) {
+          //       return new GoogleMaps();
+          //     }));
+          //   },
+          // ),
         ],
       ),
     );
